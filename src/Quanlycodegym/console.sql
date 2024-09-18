@@ -4,11 +4,12 @@ CREATE database C0624;
 use C0624;
 
 create table account_codegym (
-                                 username varchar(50),
+                                 username text,
                                  password_account varchar(50),
                                  primary key(username)
 );
-INSERT INTO account_codegym (username, password_account) VALUES ('linh77564', 'password123');
+INSERT INTO account_codegym (username, password_account) VALUES
+    ('linh77564', 'password123');
 
 
 create table class_type(
@@ -16,7 +17,7 @@ create table class_type(
                            name_type varchar(50),
                            primary key(id_type_class)
 );
-
+    
 create table class (
                        id_class int auto_increment,
                        name_class varchar(50),
@@ -67,27 +68,4 @@ create table teacher_class (
                                FOREIGN KEY (id_class) REFERENCES class(id_class)
 )
 
-SELECT s.name_student, c.name_class
-FROM student s
-         JOIN class c ON s.id_class = c.id_class;
-
-SELECT s.name_student, c.name_class, ct.name_type
-FROM student s
-         JOIN class c ON s.id_class = c.id_class
-         JOIN class_type ct ON c.id_type_class = ct.id_type_class;
-
-SELECT s.name_student, c.name_class
-FROM student s
-         LEFT JOIN class c ON s.id_class = c.id_class;
-
-SELECT * FROM student WHERE name_student IN ('Tien', 'Toan');
-
-SELECT c.name_class, COUNT(s.id_student) AS number_of_students
-FROM class c
-         LEFT JOIN student s ON c.id_class = s.id_class
-GROUP BY c.name_class;
-
-SELECT name_student FROM student ORDER BY name_student;
-
-
-
+select * from

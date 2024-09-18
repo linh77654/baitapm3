@@ -2,5 +2,6 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/Quanlycodegym/console.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/quanlybanhang/console.sql" dialect="MySQL" />
   </component>
 </project>
