@@ -14,11 +14,10 @@ INSERT INTO account_codegym (username, password_account) VALUES
 
 create table class_type(
                            id_type_class int auto_increment,
-                           name_type varchar(50),
-
+                           name_type text,
                            primary key(id_type_class)
 );
-    
+
 create table class (
                        id_class int auto_increment,
                        name_class varchar(50),
@@ -28,13 +27,15 @@ create table class (
 );
 
 create table student (
-                         id_student int auto_increment,
-                         name_student varchar(50),
-                         id_class int,
-                         username varchar(50) unique,
-                         primary key(id_student),
-                         FOREIGN KEY (username) REFERENCES account_codegym(username),
-                         FOREIGN KEY (id_class) REFERENCES class(id_class)
+id_student int auto_increment,
+name_student text,
+id_class int,
+username varchar(50) unique,
+date_of_birth datetime,
+email varchar(50),
+primary key(id_student),
+FOREIGN KEY (username) REFERENCES account_codegym(username),
+FOREIGN KEY (id_class) REFERENCES class(id_class)
 );
 insert into student(id_student, name_student, id_class, username) VALUE (1, 'Nguyễn Hoàng Linh', 1, 'linh77564');
 SELECT * FROM account_codegym;
@@ -42,7 +43,7 @@ INSERT INTO student (name_student, id_class, username) VALUES ('Hải TT', 1, 'h
 
 create table teacher (
                          id_teacher int auto_increment,
-                         name_teacher varchar(50),
+                         name_teacher text,
                          username varchar(50) unique,
                          primary key(id_teacher),
                          FOREIGN KEY (username) REFERENCES account_codegym(username)

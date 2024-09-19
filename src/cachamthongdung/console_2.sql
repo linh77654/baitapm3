@@ -3,59 +3,57 @@ CREATE DATABASE quan_ly_sinh_vien;
 USE quan_ly_sinh_vien;
 
 CREATE TABLE class(
-    ClassID INT NOT NULL AUTO_INCREMENT ,
-    ClassName VARCHAR(60) NOT NULL,
-    StartDate DATETIME NOT NULL,
-    primary key (ClassID),
-    Status BIT
+                      class_id INT NOT NULL AUTO_INCREMENT,
+                      class_name VARCHAR(60) NOT NULL,
+                      start_date DATETIME NOT NULL,
+                      status BIT,
+                      PRIMARY KEY (class_id)
 );
 
 CREATE TABLE student(
-    StudentId INT NOT NULL AUTO_INCREMENT,
-    StudentName VARCHAR(30) NOT NULL,
-    Address VARCHAR(50),
-    Phone VARCHAR(20),
-    Status BIT,
-    ClassId INT NOT NULL,
-    primary key (StudentId),
-    FOREIGN KEY (ClassId) REFERENCES Class (ClassID)
+                        student_id INT NOT NULL AUTO_INCREMENT,
+                        student_name VARCHAR(30) NOT NULL,
+                        address VARCHAR(50),
+                        phone VARCHAR(20),
+                        status BIT,
+                        class_id INT NOT NULL,
+                        PRIMARY KEY (student_id),
+                        FOREIGN KEY (class_id) REFERENCES class (class_id)
 );
 
 CREATE TABLE subject(
-    SubId INT NOT NULL AUTO_INCREMENT ,
-    SubName VARCHAR(30) NOT NULL,
-    Credit TINYINT NOT NULL DEFAULT 1 CHECK ( Credit >= 1 ),
-    Status BIT DEFAULT 1,
-    primary key (SubId)
+                        sub_id INT NOT NULL AUTO_INCREMENT,
+                        sub_name VARCHAR(30) NOT NULL,
+                        credit TINYINT NOT NULL DEFAULT 1 CHECK ( credit >= 1 ),
+                        status BIT DEFAULT 1,
+                        PRIMARY KEY (sub_id)
 );
 
 CREATE TABLE mark(
-    MarkId INT NOT NULL AUTO_INCREMENT,
-    SubId INT NOT NULL,
-    StudentId INT NOT NULL,
-    Mark FLOAT DEFAULT 0 CHECK ( Mark BETWEEN 0 AND 100),
-    ExamTimes TINYINT DEFAULT 1,
-    UNIQUE (SubId, StudentId),
-    primary key (MarkId),
-    FOREIGN KEY (SubId) REFERENCES Subject (SubId),
-    FOREIGN KEY (StudentId) REFERENCES Student (StudentId)
+                     mark_id INT NOT NULL AUTO_INCREMENT,
+                     sub_id INT NOT NULL,
+                     student_id INT NOT NULL,
+                     mark FLOAT DEFAULT 0 CHECK ( mark BETWEEN 0 AND 100),
+                     exam_times TINYINT DEFAULT 1,
+                     UNIQUE (sub_id, student_id),
+                     PRIMARY KEY (mark_id),
+                     FOREIGN KEY (sub_id) REFERENCES subject (sub_id),
+                     FOREIGN KEY (student_id) REFERENCES student (student_id)
 );
 
 SELECT *
 FROM subject
 WHERE credit = (SELECT MAX(credit) FROM subject);
 
-select SubName, max(MarK)
-from subject
-         join
-     mark on mark.SubId = subject.SubId
-group by SubName
-having max(Mark) = (select max(Mark) from Mark);
+SELECT sub_name, MAX(mark) AS highest_mark
+FROM subject
+         JOIN mark ON mark.sub_id = subject.sub_id
+GROUP BY sub_name
+HAVING MAX(mark) = (SELECT MAX(mark) FROM mark);
 
-
-select student.StudentId, student.StudentName, avg(mark.MarK) as average_mark
-from student
-         join
-     mark on mark.StudentId = student.StudentId
-group by student.StudentId, student.StudentName
-order by avg(mark.MarK) desc;
+-- Truy vấn 3: Lấy danh sách sinh viên và điểm trung bình
+SELECT student.student_id, student.student_name, AVG(mark.mark) AS average_mark
+FROM student
+         JOIN mark ON mark.student_id = student.student_id
+GROUP BY student.student_id, student.student_name
+ORDER BY AVG(mark.mark) DESC;
