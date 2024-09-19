@@ -15,6 +15,7 @@ INSERT INTO account_codegym (username, password_account) VALUES
 create table class_type(
                            id_type_class int auto_increment,
                            name_type varchar(50),
+
                            primary key(id_type_class)
 );
     
@@ -68,4 +69,3 @@ create table teacher_class (
                                FOREIGN KEY (id_class) REFERENCES class(id_class)
 )
 
-select * from
