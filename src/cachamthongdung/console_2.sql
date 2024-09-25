@@ -51,7 +51,6 @@ FROM subject
 GROUP BY sub_name
 HAVING MAX(mark) = (SELECT MAX(mark) FROM mark);
 
--- Truy vấn 3: Lấy danh sách sinh viên và điểm trung bình
 SELECT student.student_id, student.student_name, AVG(mark.mark) AS average_mark
 FROM student
          JOIN mark ON mark.student_id = student.student_id

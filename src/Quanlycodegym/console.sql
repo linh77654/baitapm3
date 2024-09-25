@@ -4,7 +4,7 @@ CREATE database C0624;
 use C0624;
 
 create table account_codegym (
-                                 username text,
+                                 username varchar(225),
                                  password_account varchar(50),
                                  primary key(username)
 );
@@ -14,13 +14,13 @@ INSERT INTO account_codegym (username, password_account) VALUES
 
 create table class_type(
                            id_type_class int auto_increment,
-                           name_type text,
+                           name_type varchar(100),
                            primary key(id_type_class)
 );
 
 create table class (
                        id_class int auto_increment,
-                       name_class varchar(50),
+                       name_class varchar(100),
                        id_type_class int,
                        primary key(id_class),
                        FOREIGN KEY (id_type_class) REFERENCES class_type(id_type_class)
@@ -28,7 +28,7 @@ create table class (
 
 create table student (
 id_student int auto_increment,
-name_student text,
+name_student varchar(100),
 id_class int,
 username varchar(50) unique,
 date_of_birth datetime,
